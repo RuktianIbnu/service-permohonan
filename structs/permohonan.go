@@ -1,8 +1,11 @@
 package structs
 
+import "github.com/jinzhu/gorm"
+
 type DataPermohonan struct{
-	Id						int
+	gorm.Model
 	Email_user_pemohon 		string
+	Nip 					string
 	Status 					string
 	Nama_server 			string
 	Detail 					string
@@ -18,9 +21,6 @@ type DataPermohonan struct{
 	Id_kontainment			string
 	Rak						string
 	Id_petugas_approval		string
-	Date_insert_at			string
-	Date_update_at			string
-	Date_delete_at			string
 }
 
 func (DataPermohonan) DataPermohonan()string{

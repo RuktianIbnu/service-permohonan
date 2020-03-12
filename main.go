@@ -8,10 +8,11 @@ import (
 )
 
 func main(){
-	db := config.DbConn()
+	db := config.DBInit()
+	inDB := &handler.InDB{DB: db}
 	router := gin.Default()
 
-	defer db.Close()
-	router.POST("/service-permohonan/simpan-data", handler.InsertData)
+	router.POST("/service-permohonan/simpan-data", inDB.InsertData)
+	router.GET("/service-permohonan/semua-data", inDB.GetAllData)
 	router.Run(":3400")
 }
