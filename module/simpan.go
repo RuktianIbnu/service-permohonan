@@ -46,8 +46,9 @@ func (idb *InDB) InsertData(c *gin.Context){
     data.Id_kontainment     = id_kontainment
     data.Rak                = rak 
 
-    tokenIsExist := CekAuth(c)
-    if tokenIsExist == true {
+    valid := CekAuth(c)
+
+    if valid == true {
         success := idb.DB.Create(&data).Error
         if success != nil {
             c.JSON(http.StatusInternalServerError, gin.H {
