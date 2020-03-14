@@ -2,14 +2,14 @@ package main
 
 import (
 	"./config"
-	"./handler"
+	"./module"
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
 )
 
 func main(){
 	db := config.DBInit()
-	inDB := &handler.InDB{DB: db}
+	inDB := &module.InDB{DB: db}
 	router := gin.Default()
 
 	router.POST("/service-permohonan/simpan-data", inDB.InsertData)

@@ -1,10 +1,13 @@
 package structs
 
-import "github.com/jinzhu/gorm"
+import "time"
 
 type DataPermohonan struct{
-	gorm.Model
-	Email_user_pemohon 		string
+	ID        uint       `json:"-" gorm:"primary_key"`
+	CreatedAt time.Time  `json:"-"`
+	UpdatedAt time.Time  `json:"-"`
+	DeletedAt *time.Time `json:"-" sql:"index"`
+	ID_user_pemohon 		string
 	Nip 					string
 	Status 					string
 	Nama_server 			string
