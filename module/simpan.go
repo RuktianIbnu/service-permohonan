@@ -14,7 +14,6 @@ func (idb *InDB) InsertData(c *gin.Context){
 	)
 
     id_user_pemohon     := c.PostForm("id_user_pemohon")
-    status              := c.PostForm("status")
     nama_server         := c.PostForm("nama_server")
     detail              := c.PostForm("detail")
     jenis_server        := c.PostForm("jenis_server")
@@ -31,7 +30,7 @@ func (idb *InDB) InsertData(c *gin.Context){
 
 
     data.ID_user_pemohon    = id_user_pemohon
-    data.Status             = status
+    data.Status             = "NEW"
     data.Nama_server        = nama_server
     data.Detail             = detail
     data.Jenis_server       = jenis_server

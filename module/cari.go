@@ -69,3 +69,34 @@ func (idb *InDB) GetDataById(c *gin.Context){
 	}
 	c.JSON(http.StatusOK, result)
 }
+
+func (idb *InDB) GetDataStatus(c *gin.Context){
+	var (
+		data []structs.DataPermohonan
+		result gin.H
+	)
+	tokenIsExist := CekAuth(c)
+	if tokenIsExist == true {
+		status := c.PostForm("status")
+		err := idb.DB.Where("status = ?", status).Find(&data).Error
+		if err != nil {
+			result = gin.H {
+				"result": nil,
+				"count": 0,
+				"status": "Data Kosong",
+			}
+		} else {
+			result = gin.H {
+				"status": "success",
+				"pesan": "get data by status = " + status,
+				"data_permohonan": data,
+			}
+		}
+	} else {
+		result = gin.H {
+			"status": "error",
+			"pesan": "not authorized",
+		}
+	}
+	c.JSON(http.StatusOK, result)
+}

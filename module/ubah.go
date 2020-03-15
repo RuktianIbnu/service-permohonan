@@ -73,3 +73,48 @@ func (idb *InDB) UpdateData(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, result)
 }
+
+func (idb *InDB) UpdateByPetugas(c *gin.Context) {
+	var (
+		data structs.DataPermohonan
+		NewData structs.DataPermohonan
+		result gin.H
+	)
+	id 					:= c.PostForm("id")
+    status         		:= c.PostForm("status")
+    id_petugas_approval := c.PostForm("id_petugas_approval")
+
+	access := CekAuth(c)
+
+	if access == false {
+		result = gin.H{
+			"pesan": "not authorized",
+			"status": "error",
+		}
+	} else {
+		CekData := idb.DB.Where("id = ?", id).First(&data).Error 
+		if CekData != nil {
+			result = gin.H{
+				"pesan": "data tidak ditemukan",
+				"status": "not_found",
+			}
+		} else if CekData == nil {
+			NewData.Status        				= status
+			NewData.Id_petugas_approval         = id_petugas_approval
+			
+			err := idb.DB.Model(&data).Where("id = ?", id).Updates(NewData).Error
+			if err != nil {
+				result = gin.H{
+					"pesan": "update failed",
+					"status": "error",
+				}
+			} else {
+				result = gin.H{
+					"pesan": "successfully updated data",
+					"status": "success",
+				}
+			}	
+		}
+	}
+	c.JSON(http.StatusOK, result)
+}
