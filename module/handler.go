@@ -56,27 +56,39 @@ func CekAuth(c *gin.Context) bool{
 }
 
 func (idb *InDB) TestMapping(c *gin.Context) {
-	var result gin.H
+	var (
+		result gin.H
+	)
 	token := c.Request.Header.Get("Authorization")
 	key := c.Request.Header.Get("key")
 	tokenString := token   
 	claims := jwt.MapClaims{}
-	MapToken, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
+	MapClaims, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
 		return []byte(key), nil
 	})
 	if err != nil {
 		result = gin.H {
 			"status": "error " + err.Error(),
 			"pesan": "not authorized",
-			"token": token,
 		}
 		c.JSON(http.StatusUnauthorized, result)
 		c.Abort()
 	} else {
 		result = gin.H{
-			"isi token": MapToken,
+			"detail": MapClaims.Claims,
 		}
 		c.JSON(http.StatusOK, result)
 		c.Abort()
 	}
+	// 	var a string
+	// 	for _, val := range claims {
+	// 		a = val.(string)
+			
+	// 	}
+	// 	result = gin.H{
+	// 		"x": a,
+	// 	}
+	// 	c.JSON(http.StatusOK, result)
+	// 	c.Abort()
+	// }
 }

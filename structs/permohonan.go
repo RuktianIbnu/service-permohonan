@@ -20,7 +20,7 @@ type DataPermohonan struct{
 	Internet				string
 	Internet_status			string
 	Open_port				string
-	Lokasi					string	
+	Lokasi					string
 	Id_kontainment			string
 	Rak						string
 	Id_petugas_approval		string
@@ -28,4 +28,18 @@ type DataPermohonan struct{
 
 func (DataPermohonan) DataPermohonan()string{
 	return "dataPermohonan"
+}
+
+type Session struct{
+	ID        	string
+	email		string
+	instansi	string
+	jabatan		string
+	nama		string
+	nip			string
+	role		string
+}
+
+func (Session) Session()string{
+	return "session"
 }
